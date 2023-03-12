@@ -49,7 +49,7 @@ Route::post('/order', function (Request $request) {
 		$orders[] = new Order($id,$drink,$quantity,$time); 
 		$previousHistory[] = $orders;
 		Cache::put('history',$previousHistory);
-		Cache::put('orders',$orders,$seconds = $modifiedDelay);
+		Cache::put('orders',$orders,$seconds = $modifiedDelay * $quantity);
 		return response()->json([
     		'msg' => "Order accepted",
 		], 200);
