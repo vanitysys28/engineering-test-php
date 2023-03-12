@@ -53,11 +53,11 @@ Route::post('/order', function (Request $request) {
 		return response()->json([
     		'msg' => "Order accepted",
 		], 200);
-	} else if ($drink === "BEER" and $quantity == 1 and is_null(Cache::get('orders') == 0)){
+	} else if ($drink === "BEER" and $quantity == 1 and !empty(Cache::get('orders')) and empty(Cache::get('pending'))){
 		$orders[] = new Order($id,$drink,$quantity,$time); 
 		$previousHistory[] = $orders;
 		Cache::put('history',$previousHistory);
-		Cache::put('orders',$orders,$seconds = $modifiedDelay);
+		Cache::put('pending',$orders,$seconds = $modifiedDelay);
 		return response()->json([
     		'msg' => "Order accepted",
 		], 200);
